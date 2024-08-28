@@ -638,7 +638,9 @@ ActivityPtr MakeActivity(Factory promise_factory,
 }
 
 inline Pending IntraActivityWaiter::pending() {
-  wakeups_ |= GetContext<Activity>()->CurrentParticipant();
+  if (Activity::current()) {
+    wakeups_ |= GetContext<Activity>()->CurrentParticipant();
+  }
   return Pending();
 }
 
